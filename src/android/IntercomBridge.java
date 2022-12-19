@@ -149,7 +149,7 @@ public class IntercomBridge extends CordovaPlugin {
                 Intercom.client().registerIdentifiedUser(registration);
                 callbackContext.success();
             }
-        }
+        },
         registerUnidentifiedUser {
             @Override void performAction(JSONArray args, CallbackContext callbackContext, CordovaInterface cordova) {
                 Intercom.client().registerUnidentifiedUser();
