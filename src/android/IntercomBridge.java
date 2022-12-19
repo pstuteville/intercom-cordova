@@ -3,6 +3,9 @@ package io.intercom.android.sdk;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+// import android.app.NotificationChannel;
+// import android.app.NotificationManager;
+import android.os.Build;
 
 import com.google.gson.Gson;
 
@@ -13,6 +16,7 @@ import org.apache.cordova.PluginResult;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,10 +41,14 @@ import io.intercom.android.sdk.push.IntercomPushClient;
 public class IntercomBridge extends CordovaPlugin {
 
     private static final String CUSTOM_ATTRIBUTES = "custom_attributes";
+    protected static final String TAG = "SchedulistaPlugin";
 
     @Override protected void pluginInitialize() {
+        Log.d(TAG, "Starting Schedulista Intercom plugin");
+
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override public void run() {
+//                 createNotificationChannel();
                 setUpIntercom();
                 try {
                     Injector.get().getApi().updateUser(
@@ -51,6 +59,7 @@ public class IntercomBridge extends CordovaPlugin {
                             });
                 } catch (RuntimeException e) {
                     // Intercom is not initialised yet, do nothing
+                    Log.d(TAG, "Exception", e);
                 }
             }
         });
@@ -70,6 +79,24 @@ public class IntercomBridge extends CordovaPlugin {
     @Override public void onNewIntent(Intent intent) {
         cordova.getActivity().setIntent(intent);
     }
+
+//     private void createNotificationChannel() {
+//         try {
+//             Log.d(TAG, "Creating notification channel for intercom replies");
+//
+//             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                 int importance = NotificationManager.IMPORTANCE_HIGH;
+//                 NotificationChannel intercomChannel = new NotificationChannel("intercom_chat_replies_channel", "Intercom Replies", importance);
+//                 intercomChannel.setDescription("Replies from Support (Chat to us)");
+//                 NotificationManager notificationManager = cordova.getActivity().getSystemService(NotificationManager.class);
+//                 assert notificationManager != null;
+//                 notificationManager.createNotificationChannel(intercomChannel);
+//             }
+//         }
+//         catch (Exception e) {
+//             Log.d(TAG, "Exception", e);
+//         }
+//     }
 
     private void setUpIntercom() {
         try {
