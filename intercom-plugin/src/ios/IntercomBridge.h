@@ -27,8 +27,9 @@
 - (void)setBottomPadding:(CDVInvokedUrlCommand*)command;
 - (void)setInAppMessageVisibility:(CDVInvokedUrlCommand*)command;
 - (void)hideIntercom:(CDVInvokedUrlCommand*)command;
-    
+
 
 - (void)registerForPush:(CDVInvokedUrlCommand*)command;
+- (void)handlePush:(CDVInvokedUrlCommand*)command;
 
 @end

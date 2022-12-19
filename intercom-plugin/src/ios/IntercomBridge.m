@@ -34,7 +34,7 @@
     }
 
     ICMUserAttributes *userAttributes = [ICMUserAttributes new];
-    
+
     if (userId.length > 0 && userEmail.length > 0) {
         userAttributes.userId = userId;
         userAttributes.email = userEmail;
@@ -48,7 +48,7 @@
                                     callbackId:command.callbackId];
         return;
     }
-    
+
     [Intercom loginUserWithUserAttributes:userAttributes success:^{
         [self sendSuccess:command];
     } failure:^(NSError * _Nonnull error) {
@@ -209,6 +209,10 @@
                                                                                            | UNAuthorizationOptionSound)
                                                                         completionHandler:^(BOOL granted, NSError * _Nullable error) {}];
     [application registerForRemoteNotifications];
+    [self sendSuccess:command];
+}
+
+- (void)handlePush:(CDVInvokedUrlCommand*)command {
     [self sendSuccess:command];
 }
 
