@@ -3,8 +3,6 @@ package io.intercom.android.sdk;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-// import android.app.NotificationChannel;
-// import android.app.NotificationManager;
 import android.os.Build;
 
 import com.google.gson.Gson;
@@ -38,17 +36,18 @@ import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.logger.LumberMill;
 import io.intercom.android.sdk.push.IntercomPushClient;
 
+import io.intercom.android.sdk.IntercomMessageReceiver;
+
+
 public class IntercomBridge extends CordovaPlugin {
 
     private static final String CUSTOM_ATTRIBUTES = "custom_attributes";
-    protected static final String TAG = "SchedulistaPlugin";
+    public static Application application;
+    private IntercomMessageReceiver messageReceiver;
 
     @Override protected void pluginInitialize() {
-        Log.d(TAG, "Starting Schedulista Intercom plugin");
-
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override public void run() {
-//                 createNotificationChannel();
                 setUpIntercom();
                 try {
                     Injector.get().getApi().updateUser(
@@ -59,7 +58,6 @@ public class IntercomBridge extends CordovaPlugin {
                             });
                 } catch (RuntimeException e) {
                     // Intercom is not initialised yet, do nothing
-                    Log.d(TAG, "Exception", e);
                 }
             }
         });
@@ -80,24 +78,6 @@ public class IntercomBridge extends CordovaPlugin {
         cordova.getActivity().setIntent(intent);
     }
 
-//     private void createNotificationChannel() {
-//         try {
-//             Log.d(TAG, "Creating notification channel for intercom replies");
-//
-//             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                 int importance = NotificationManager.IMPORTANCE_HIGH;
-//                 NotificationChannel intercomChannel = new NotificationChannel("intercom_chat_replies_channel", "Intercom Replies", importance);
-//                 intercomChannel.setDescription("Replies from Support (Chat to us)");
-//                 NotificationManager notificationManager = cordova.getActivity().getSystemService(NotificationManager.class);
-//                 assert notificationManager != null;
-//                 notificationManager.createNotificationChannel(intercomChannel);
-//             }
-//         }
-//         catch (Exception e) {
-//             Log.d(TAG, "Exception", e);
-//         }
-//     }
-
     private void setUpIntercom() {
         try {
             Context context = cordova.getActivity().getApplicationContext();
@@ -106,6 +86,8 @@ public class IntercomBridge extends CordovaPlugin {
 
             switch (IntercomPushManager.getInstalledModuleType()) {
                 case FCM: {
+                    messageReceiver = new IntercomMessageReceiver();
+
                     String senderId = getSenderId(context);
 
                     if (senderId != null) {
@@ -167,13 +149,7 @@ public class IntercomBridge extends CordovaPlugin {
                 Intercom.client().registerIdentifiedUser(registration);
                 callbackContext.success();
             }
-        },
-        handlePush {
-            @Override void performAction(JSONArray args, CallbackContext callbackContext, CordovaInterface cordova) {
-                Intercom.client().handlePush();
-                callbackContext.success();
-            }
-        },
+        }
         registerUnidentifiedUser {
             @Override void performAction(JSONArray args, CallbackContext callbackContext, CordovaInterface cordova) {
                 Intercom.client().registerUnidentifiedUser();

@@ -118,10 +118,6 @@ var intercom = {
 
     setBottomPadding: function(bottomPadding, success, error) {
         cordova.exec(success, error, 'Intercom', 'setBottomPadding', [bottomPadding]);
-    },
-
-    handlePush: function(success, error) {
-        cordova.exec(success, error, 'Intercom', 'handlePush', []);
     }
 }
 

@@ -30,6 +30,5 @@
 
 
 - (void)registerForPush:(CDVInvokedUrlCommand*)command;
-- (void)handlePush:(CDVInvokedUrlCommand*)command;
 
 @end

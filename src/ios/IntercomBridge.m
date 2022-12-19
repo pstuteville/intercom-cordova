@@ -212,10 +212,6 @@
     [self sendSuccess:command];
 }
 
-- (void)handlePush:(CDVInvokedUrlCommand*)command {
-    [self sendSuccess:command];
-}
-
 - (void)sendPushTokenToIntercom:(CDVInvokedUrlCommand*)command {
   NSLog(@"[Intercom-Cordova] INFO - sendPushTokenToIntercom called");
 }
