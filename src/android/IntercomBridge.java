@@ -44,7 +44,7 @@ public class IntercomBridge extends CordovaPlugin {
 
     private static final String CUSTOM_ATTRIBUTES = "custom_attributes";
     public static Application application;
-    private IntercomMessageReceiver messageReceiver;
+    private static IntercomMessageReceiver messageReceiver;
 
     @Override protected void pluginInitialize() {
         cordova.getActivity().runOnUiThread(new Runnable() {
@@ -82,6 +82,7 @@ public class IntercomBridge extends CordovaPlugin {
     private void setUpIntercom() {
         try {
             Context context = cordova.getActivity().getApplicationContext();
+            application = cordova.getActivity().getApplication();
 
             CordovaHeaderInterceptor.setCordovaVersion(context, "12.1.0");
 
