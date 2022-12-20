@@ -73,7 +73,7 @@ var app = {
             console.log('Successfully fetched collections : ' + data);
           }
           var onError = function(code) {
-            console.log('Failed to fetch collections with code :' + code);
+            console.log('Failed to fetch collections with code :' + data);
           }
           intercom.fetchHelpCenterCollections(onSuccess, onError);
       }, false);
@@ -85,7 +85,7 @@ var app = {
             console.log('Successfully fetched collection content : ' + data);
           }
           var onError = function(code) {
-            console.log('Failed to fetch collection content with code :' + code);
+            console.log('Failed to fetch collection content with code :' + data);
           }
           intercom.fetchHelpCenterCollection(collectionId, onSuccess, onError);
       }, false);
@@ -97,7 +97,7 @@ var app = {
             console.log('Successfully searched help center : ' + data);
           }
           var onError = function(code) {
-            console.log('Failed to search help center with code :' + code);
+            console.log('Failed to search help center with code :' + data);
           }
           intercom.searchHelpCenter(searchTerm, onSuccess, onError);
       }, false);
@@ -126,20 +126,15 @@ var app = {
     },
 
     login: function() {
-        // Replace this email with your own
-        var emailAddress = "sample-email@test.com";
-        if (emailAddress) {
-            var onSuccess = function() {
-                console.log('Successfully logged in to Intercom!');
-            }
-            var onError = function(code) {
-                console.log('Failed to login to Intercom :' + code);
-            }
-            intercom.loginUserWithUserAttributes({email: emailAddress}, onSuccess, onError);
-            var storage = window.localStorage;
-            storage.setItem("email", emailAddress);
-            app.configureViewForLoggedInUser();
-        }
+      // Replace this email with your own
+      var emailAddress = "sample-email@test.com";
+      if (emailAddress) {
+        intercom.registerIdentifiedUser({email: emailAddress});
+        var storage = window.localStorage;
+        storage.setItem("email", emailAddress);
+        app.configureViewForLoggedInUser();
+      }
+      console.log('Successfully logged in with : ' + emailAddress);
     },
 
     configureViewForLoggedInUser: function() {
