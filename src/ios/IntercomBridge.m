@@ -24,7 +24,7 @@
     [Intercom setApiKey:apiKey forAppId:appId];
 }
 
-- (void)loginUserWithUserAttributes:(CDVInvokedUrlCommand*)command {
+- (void)registerIdentifiedUser:(CDVInvokedUrlCommand*)command {
     NSDictionary* options = command.arguments[0];
     NSString* userId      = options[@"userId"];
     NSString* userEmail   = options[@"email"];
@@ -57,7 +57,7 @@
     [self sendSuccess:command];
 }
 
-- (void)loginUnidentifiedUser:(CDVInvokedUrlCommand*)command {
+- (void)registerUnidentifiedUser:(CDVInvokedUrlCommand*)command {
     [Intercom loginUnidentifiedUserWithSuccess:^{
         [self sendSuccess:command];
     } failure:^(NSError * _Nonnull error) {

@@ -4,8 +4,8 @@
 
 @interface IntercomBridge : CDVPlugin
 
-- (void)loginUserWithUserAttributes:(CDVInvokedUrlCommand*)command;
-- (void)loginUnidentifiedUser:(CDVInvokedUrlCommand*)command;
+- (void)registerIdentifiedUser:(CDVInvokedUrlCommand*)command;
+- (void)registerUnidentifiedUser:(CDVInvokedUrlCommand*)command;
 - (void)logout:(CDVInvokedUrlCommand*)command;
 
 - (void)setUserHash:(CDVInvokedUrlCommand*)command;
