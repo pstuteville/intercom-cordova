@@ -1,5 +1,54 @@
 # Intercom for Cordova/PhoneGap
 
+## 14.0.2 (2024-06-25)
+
+🐛 Bug Fixes
+* Now sets the minimum deployment target in the `plugin.xml` for iOS to avoid collisions with other plugins.
+
+## 14.0.1 (2024-06-014)
+
+🚀 Enhancements
+* It is now possible to send push notifications to the Simulator. (iOS)
+
+🐛 Bug Fixes
+* Fixed an issue where it was not possible to close modal view that was opened from a Messenger App. (iOS)
+* The message composer is now always displayed on the conversation screen when appropriate.(iOS)
+* When a conversation is closed, form entry is disabled on the conversation screen. (iOS & Android)
+* Made some minor UI bug fixes. (iOS)
+* Fixed the issue where push open stats weren’t tracked correctly. (Android)
+
+## 14.0.0 (2024-06-05)
+🚀  Enhancements
+* Updated Intercom Cordova Plugin to support the latest versions of the core iOS and Android SDKs. 
+* Updated to the latest versions of `cordova`, `cordova-android` and `cordova-ios`. 
+* As this is a major release, we have deprecated a number of APIs and added some new ones. The deprecated APIs will continue to work for the next few versions of the plugin, after which they will be removed fully.
+
+#### Summary of API changes.
+| Deprecated API    |  New API |
+| ----------- | ----------- |
+|   registerIdentifiedUser()   |     loginUserWithUserAttributes()  |
+|   registerUnidentifiedUser()   |     loginUnidentifiedUser()  |
+|   reset()   |     logout()  |
+|   displayMessenger()   |     present()  |
+|   displayHelpCenter()   |     present(intercom.Space.HelpCenter) |
+|   displayMessageComposerWithInitialMessage()   |     presentMessageComposer(initialMessage)  |
+|   displayMessageComposer()   |     presentMessageComposer()  |
+|   displayHelpCenterCollections()   |     presentContent(intercomContent.helpCenterCollectionsWithIds([ids])  |
+|   displayCarousel()   |    presentContent(intercomContent.carouselWithCarouselId(carouselId)  |
+|   displayArticle()   |    presentContent(intercomContent.articleWithArticleId(articleId))  |
+|   displaySurvey()   |    presentContent(intercomContent.surveyWithSurveyId(surveyId))  |
+|   N/A  |    presentContent(intercomContent.conversationWithConversationId(conversationId))  |
+
+#### Summary of required versions of libararies and SDKs.
+| Name      | Required Version |
+| ----------- | ----------- |
+|   cordova   |     12.0.0  |
+|   cordova-android   |     13.0.0  |
+|   cordova-ios   |     7.1.0 |
+|   iOS SDK  |     15.0.0 |
+|   Android SDK   |     34 |
+
+
 ## 13.10.0 (2024-04-26)
 🚀  Enhancements
 * Added support for iOS 16.
